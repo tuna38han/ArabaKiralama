@@ -1,0 +1,203 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="~/carbookTemplate/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="~/carbookTemplate/css/animate.css">
+
+    <link rel="stylesheet" href="~/carbookTemplate/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/carbookTemplate/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/carbookTemplate/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="~/carbookTemplate/css/aos.css">
+
+    <link rel="stylesheet" href="~/carbookTemplate/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="~/carbookTemplate/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="~/carbookTemplate/css/jquery.timepicker.css">
+
+
+    <link rel="stylesheet" href="~/carbookTemplate/css/flaticon.css">
+    <link rel="stylesheet" href="~/carbookTemplate/css/icomoon.css">
+    <link rel="stylesheet" href="~/carbookTemplate/css/style.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/Home/Index">Kolay<span>Kirala</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a href="/Home/Index" class="nav-link">Ana Sayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">Hakkımızda</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#service" class="nav-link">Servislerimiz</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">İletişim</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/User/GetAllCars" class="nav-link">Arabalar</a>
+                </li>
+                <li class="nav-item" id="loginButton">
+                    <a href="/Account/Login" class="nav-link">Giriş</a>
+                </li>
+                <li class="nav-item" id="logoutButton" style="display: none;">
+                    <a href="#" class="nav-link">Çıkış</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<div>
+    @RenderBody()
+</div>
+<footer class="ftco-footer ftco-bg-dark ftco-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">
+                        <a class="logo">Kolay<span>kirala</span></a>
+                    </h2>
+                    <p>KOLAYKIRALA ile seyahat etmek artık bir adım daha yakın! Geniş araç seçenekleri ve hızlı rezervasyon ile kolaylıkla aracınızı bulun, sürüşe başlayın!</p>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4 ml-md-5">
+                    <h2 class="ftco-heading-2">Bilgilendirme</h2>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a class="py-2 d-block">Hakkımızda</a>
+                        </li>
+                        <li>
+                            <a class="py-2 d-block">Servislerimiz</a>
+                        </li>
+                        <li>
+                            <a class="py-2 d-block">Gizlilik ve Çerez Politikası</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Müşteri Desteği</h2>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a class="py-2 d-block">Ödeme Seçenekleri</a>
+                        </li>
+                        <li>
+                            <a class="py-2 d-block">Rezervasyon İpuçları</a>
+                        </li>
+                        <li>
+                            <a class="py-2 d-block">Nasıl Çalışırız?</a>
+                        </li>
+                        <li>
+                            <a class="py-2 d-block">Bizimle İletişime Geçin</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="contact" class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Bize Ulaşın</h2>
+                    <div class="block-23 mb-3">
+                        <ul>
+                            <li>
+                                <span class="icon icon-map-marker"></span><span class="text">123 Kiralık Araç Cad., Mercan Mahallesi, Beşiktaş, İstanbul, Türkiye</span>
+                            </li>
+                            <li>
+                                <a>
+                                    <span class="icon icon-phone"></span><span class="text">+0262 000 0000</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <span class="icon icon-envelope"></span><span class="text">info@kolaykirala.com</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy;<script>document.write(new Date().getFullYear());</script> Tüm Hakları Saklıdır</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<div id="ftco-loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/>
+    </svg>
+</div>
+<script src="~/carbookTemplate/js/jquery.min.js"></script>
+<script src="~/carbookTemplate/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="~/carbookTemplate/js/popper.min.js"></script>
+<script src="~/carbookTemplate/js/bootstrap.min.js"></script>
+<script src="~/carbookTemplate/js/jquery.easing.1.3.js"></script>
+<script src="~/carbookTemplate/js/jquery.waypoints.min.js"></script>
+<script src="~/carbookTemplate/js/jquery.stellar.min.js"></script>
+<script src="~/carbookTemplate/js/owl.carousel.min.js"></script>
+<script src="~/carbookTemplate/js/jquery.magnific-popup.min.js"></script>
+<script src="~/carbookTemplate/js/aos.js"></script>
+<script src="~/carbookTemplate/js/jquery.animateNumber.min.js"></script>
+<script src="~/carbookTemplate/js/bootstrap-datepicker.js"></script>
+<script src="~/carbookTemplate/js/jquery.timepicker.min.js"></script>
+<script src="~/carbookTemplate/js/scrollax.min.js"></script>
+<script src="~/carbookTemplate/js/google-map.js"></script>
+<script src="~/carbookTemplate/js/main.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var accessToken = localStorage.getItem('accessToken');
+        var tokenInfo = accessToken ? parseJwt(accessToken) : null;
+        
+        if (!accessToken || accessToken.trim() === '' ) {        
+            $('#loginButton').show();
+            $('#logoutButton').hide();
+        } else {
+            $('#loginButton').hide();
+            $('#logoutButton').show();
+        }
+         if (tokenInfo && tokenInfo["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] === "Admin") {
+                     $('.navbar-nav').append('<li class="nav-item"><a href="/Admin/Index" class="nav-link">Admin Paneli</a></li>');
+                 }
+                 if (tokenInfo["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] === "User") {
+                             var userId = tokenInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+                             var userRentalsUrl = "/User/GetMyRentals/" + userId;
+                             $('.navbar-nav').append('<li class="nav-item"><a href="' + userRentalsUrl + '" class="nav-link">Kiraladığım Arabalar</a></li>');
+                         }
+        $('#logoutButton').click(function() {
+            localStorage.removeItem('accessToken');
+            location.reload();
+        });
+    });
+    
+    function parseJwt(token) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    };
+  </script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

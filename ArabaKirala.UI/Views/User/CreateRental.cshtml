@@ -1,0 +1,186 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+</head>
+<body>
+<section class="ftco-section ftco-no-pt bg-light section-shadow">
+    <div class="container" style="margin-top: 20%">
+        <div class="row no-gutters">
+            <div class="col-md-12 featured-top">
+                <div class="row no-gutters">
+                    <div class="col-md-4 d-flex align-items-center">
+                        <form action="#" class="request-form ftco-animate bg-primary" id="rentalForm">
+                            <h2>Yolculuğa Başlayın!</h2>
+                            <div class="form-group">
+                                <label for="" class="label">Konum</label>
+                                <input type="text" id="location" class="form-control" placeholder="Konum">
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="label">Teslim Yeri</label>
+                                <input type="text" id="deliveryLocation" class="form-control" placeholder="Arabayı Teslim Alacağınız Konum">
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mr-2">
+                                    <label for="" class="label">Başlama Tarihi</label>
+                                    <input id="rental_start_date" type="date" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" required>
+                                </div>
+                                <div class="form-group ml-2">
+                                    <label for="" class="label">Bitiş Tarihi</label>
+                                    <input id="rental_end_date" type="date" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="label">Seçtiğiniz Araba</label>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" id="Brand" class="form-control" placeholder="Marka" disabled>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" id="Name" class="form-control" placeholder="İsim" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-secondary py-3 px-4" type="submit">Kirala</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-md-8 d-flex align-items-center">
+                        <div class="services-wrap rounded-right w-100">
+                            <h3 class="heading-section mb-4">Araba Kiralamanın En İyi Yolu</h3>
+                            <div class="row d-flex mb-4">
+                                <div class="col-md-4 d-flex align-self-stretch ftco-animate">
+                                    <div class="services w-100 text-center">
+                                        <div class="icon d-flex align-items-center justify-content-center">
+                                            <span class="flaticon-route"></span>
+                                        </div>
+                                        <div class="text w-100">
+                                            <h3 class="heading mb-2">Yolculuklarınızı Ertelemeyin</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 d-flex align-self-stretch ftco-animate">
+                                    <div class="services w-100 text-center">
+                                        <div class="icon d-flex align-items-center justify-content-center">
+                                            <span class="flaticon-handshake"></span>
+                                        </div>
+                                        <div class="text w-100">
+                                            <h3 class="heading mb-2">%100 Memnuniyet Garantisi</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 d-flex align-self-stretch ftco-animate">
+                                    <div class="services w-100 text-center">
+                                        <div class="icon d-flex align-items-center justify-content-center">
+                                            <span class="flaticon-rent"></span>
+                                        </div>
+                                        <div class="text w-100">
+                                            <h3 class="heading mb-2">Piyasadaki En İyi Seçenekler</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p>
+                                <a href="/User/GetAllCars" class="btn btn-primary py-3 px-4">Arabalarımıza Göz Atın</a>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+$(document).ready(function(){
+    var accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+        window.location.href = '/Account/Login';
+        return;
+    }
+    
+    var carId = window.location.href.split('/').pop();
+    $.ajax({
+                type: 'GET',
+                url: 'http://localhost:5177/api/GetCar/User/' + carId,
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+                },
+                success: function (response) {
+                    $('#Brand').val(response.brand);
+                    $('#Name').val(response.name);
+                },
+                error: function (xhr, status, error) {
+                    toastr.error('Araba bilgileri getirilirken bir hata oluştu');
+                }
+            });
+    var userId = parseJwt(accessToken)["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]; 
+
+    $('#rentalForm').submit(function(event) {
+        event.preventDefault();
+
+        var formData = {
+            UserId: userId,
+            CarId: carId,
+            location: $('#location').val(),
+            deliveryLocation: $('#deliveryLocation').val(),
+            RentalStartDate: $('#rental_start_date').val(),
+            RentalEndDate: $('#rental_end_date').val(),
+        };
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:5177/api/CreateRental/User',
+            data: JSON.stringify(formData),
+            contentType: 'application/json',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+            },success: function(response) {
+                toastr.success('Kiralama işleminiz başarılı.');
+                setTimeout(function() {
+                    window.location.href = 'http://localhost:5247/User/GetMyRentals/' + userId;
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                toastr.error('Kiralama işleminiz başarısız. Lütfen tarih değerlerini kontrol ediniz.');
+            }
+        });
+
+        return false;
+    });
+    function parseJwt(token) {
+        if (token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            var payload = JSON.parse(jsonPayload);
+            var roles = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+            return roles;
+        } else {
+            return null;
+        }
+    }
+    if (parseJwt(accessToken) === "Admin") {
+        window.location.href = '/Home/Index';
+    }
+});
+
+</script>
+</body>
+</html>

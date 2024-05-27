@@ -1,0 +1,154 @@
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('@Url.Content("/carbookTemplate/images/bg_3.jpg")');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+            <div class="col-md-9 ftco-animate pb-5">
+                <p class="breadcrumbs">
+                    <span class="mr-2">
+                        <a href="/Home/Index">Ana Sayfa<i class="ion-ios-arrow-forward"></i></a>
+                    </span> <span>Arabalar<i class="ion-ios-arrow-forward"></i></span>
+                </p>
+                <h1 class="mb-3 bread">Araba Detayları</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="ftco-section ftco-car-details">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="car-details">
+                    <div class="img rounded" id="car-image"></div>
+                    <div class="text text-center" style="margin-top: 10%">
+                        <span class="subheading" id="car-brand"></span>
+                        <h2 id="car-name"></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services">
+                    <div class="media-body py-md-4">
+                        <div class="d-flex mb-3 align-items-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="flaticon-dashboard"></span>
+                            </div>
+                            <div class="text">
+                                <h3 class="heading mb-0 pl-3">
+                                    Kilometre
+                                    <span id="car-mil"></span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services">
+                    <div class="media-body py-md-4">
+                        <div class="d-flex mb-3 align-items-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="flaticon-pistons"></span>
+                            </div>
+                            <div class="text">
+                                <h3 class="heading mb-0 pl-3">
+                                    Vites
+                                    <span id="car-transmission"></span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services">
+                    <div class="media-body py-md-4">
+                        <div class="d-flex mb-3 align-items-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="flaticon-backpack"></span>
+                            </div>
+                            <div class="text">
+                                <h3 class="heading mb-0 pl-3">
+                                    Bagaj Genişliği
+                                    <span id="car-luggage"></span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services">
+                    <div class="media-body py-md-4">
+                        <div class="d-flex mb-3 align-items-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="flaticon-diesel"></span>
+                            </div>
+                            <div class="text">
+                                <h3 class="heading mb-0 pl-3">
+                                    Yakıt
+                                    <span id="car-fuel"></span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 pills">
+                <div class="bd-example bd-example-tabs">
+                    <div class="d-flex justify-content-center">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-description-tab" data-toggle="pill" href="#pills-description" role="tab" aria-controls="pills-description" aria-expanded="true">Açıklama</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-description" role="tabpanel" aria-labelledby="pills-description-tab">
+                            <div class="row">
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function getCarDetails(id) {
+        var apiUrl = "http://localhost:5177/api/GetCar/User/" + id;
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('car-image').innerHTML = "<img src='" + data.imageUrl + "' class='img-fluid'>";
+                document.querySelector('.subheading').innerText = data.brand;
+                document.querySelector('h2').innerText = data.name;
+                document.querySelector('.heading span').innerText = formatKilometers(data.mil);
+                document.querySelectorAll('.heading')[1].querySelector('span').innerText = data.transmission;
+                document.querySelectorAll('.heading')[2].querySelector('span').innerText = data.luggage;
+                document.querySelectorAll('.heading')[3].querySelector('span').innerText = data.fuel;
+                document.querySelectorAll('#pills-description p')[0].innerText = data.description;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    
+    window.onload = function () {
+        var url = window.location.href;
+        var id = url.substring(url.lastIndexOf('/') + 1);
+        getCarDetails(id);
+    };
+    
+    function formatKilometers(km) {
+        return km.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+</script>

@@ -1,0 +1,111 @@
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabalar</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('@Url.Content("/carbookTemplate/images/bg_2.jpg")');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+            <div class="col-md-9 ftco-animate pb-5">
+                <p class="breadcrumbs">
+                    <span class="mr-2">
+                        <a href="/Home/Index">Ana Sayfa<i class="ion-ios-arrow-forward"></i></a>
+                    </span> <span>Arabalar<i class="ion-ios-arrow-forward"></i></span>
+                </p>
+                <h1 class="mb-3 bread">Araçlarımızı İnceleyin</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section bg-light" id="carListSection">
+    <div class="container">
+        <div class="row" id="carList">
+        </div>
+    </div>
+</section>
+<script>
+$(document).ready(function() {
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    $.ajax({
+        url: 'http://localhost:5177/api/GetAllListCar/User',
+        type: 'GET',
+        success: function(data) {
+            var carListHTML = '';
+            if (data.length > 0) {
+                $.each(data, function(index, car) {
+                    car.brand = capitalizeFirstLetter(car.brand);
+                    var formattedPrice = parseFloat(car.price).toLocaleString('tr-TR');
+
+                    carListHTML += '<div class="col-md-4 mb-4">';
+                                        carListHTML += '<div class="card">';
+                                        carListHTML += '<img src="' + car.imageUrl + '" class="card-img-top" alt="' + car.brand + ' ' + car.name + '">';
+                                        carListHTML += '<div class="card-body">';
+                                        carListHTML += '<h5 class="card-title">' + car.brand + " - " + car.name + '</h5>';
+                                        carListHTML += '<p class="card-text">' + formattedPrice + ' ₺ / Gün</p>';
+                                        carListHTML += '</div>';
+                                        carListHTML += '<div class="card-footer">';
+                                        carListHTML += '<div class="d-flex justify-content-between">';
+                                        if (car.status == false)
+                                        {
+                                        carListHTML += '<a href="/User/CreateRental/' + car.id + '"  class="btn btn-primary">Kirala</a>';
+                                        }else{
+                                        carListHTML += '<a style="color: red;">Kirada</a>';
+                                        }
+                                        carListHTML += '<a href="/User/GetCarDetailById/' + car.id + '" class="btn btn-secondary">Detaylı Bak</a>';
+                                        carListHTML += '</div>';
+                                        carListHTML += '</div>';
+                                        carListHTML += '</div>';
+                                        carListHTML += '</div>';
+                });
+            } else {
+                carListHTML = '<div class="col-md-12 mb-4">Araba bulunamadı.</div>';
+            }
+            $('#carList').html(carListHTML);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+        }
+    });
+
+    $(document).on('click', '.view-details', function() {
+        var carId = $(this).data('carid');
+        $.ajax({
+            url: 'http://localhost:5177/api/GetCar/User/' + carId,
+            type: 'GET',
+            success: function(data) {
+            },
+            error: function(xhr, textStatus, errorThrown) {
+            }
+        });
+    });
+});
+</script>
+<style>
+    .card {
+        width: 300px;
+        height: 400px;
+    }
+    .card-footer {
+        padding: 0;
+    }
+    .card-footer .d-flex {
+        padding: 0.75rem 1.25rem;
+        justify-content: space-between;
+    }
+</style>
+</body>
+</html>
